@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 
 
@@ -12,8 +14,7 @@ class Lexer:
     ch = ' '  # assume the first char is a space
 
     def error(self, msg):
-        print
-        'Lexer error: ', msg
+        print('Lexer error: ', msg)
         sys.exit(1)
 
     def getc(self):
@@ -69,8 +70,7 @@ class Parser:
         self.lexer = lexer
 
     def error(self, msg):
-        print
-        'Parser error:', msg
+        print('Parser error:', msg)
         sys.exit(1)
 
     def term(self):
@@ -264,17 +264,26 @@ class VirtualMachine:
                 arg = program[pc + 1]
 
             if op == IFETCH:
-                stack.append(var[arg]); pc += 2
+                stack.append(var[arg]);
+                pc += 2
             elif op == ISTORE:
-                var[arg] = stack.pop(); pc += 2
+                var[arg] = stack.pop();
+                pc += 2
             elif op == IPUSH:
-                stack.append(arg); pc += 2
+                stack.append(arg);
+                pc += 2
             elif op == IPOP:
-                stack.append(arg); stack.pop(); pc += 1
+                stack.append(arg);
+                stack.pop();
+                pc += 1
             elif op == IADD:
-                stack[-2] += stack[-1]; stack.pop(); pc += 1
+                stack[-2] += stack[-1];
+                stack.pop();
+                pc += 1
             elif op == ISUB:
-                stack[-2] -= stack[-1]; stack.pop(); pc += 1
+                stack[-2] -= stack[-1];
+                stack.pop();
+                pc += 1
             elif op == ILT:
                 if stack[-2] < stack[-1]:
                     stack[-2] = 1
@@ -297,12 +306,10 @@ class VirtualMachine:
             elif op == HALT:
                 break
 
-        print
-        'Execution finished.'
+        print('Execution finished.')
         for i in xrange(26):
             if var[i] != 0:
-                print
-                '%c = %d' % (chr(i + ord('a')), var[i])
+                print('%c = %d' % (chr(i + ord('a')), var[i]))
 
 
 l = Lexer()
